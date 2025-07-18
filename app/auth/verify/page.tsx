@@ -27,7 +27,7 @@ export default function VerifyEmail() {
   }, [searchParams, router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       <h1 className="text-2xl font-semibold mb-6">Email Verification</h1>
       <p className="text-sm text-gray-600">{message}</p>
     </div>
