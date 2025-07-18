@@ -101,7 +101,7 @@ export default function RegisterPage() {
             type="submit"
             className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-arcade hover:bg-purple-700 transition"
           >
-            🎮 Sign Up
+            Sign Up
           </Button>
         </motion.div>  
         </form>

@@ -88,7 +88,7 @@ export default function Login() {
               type="submit"
               className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-arcade hover:bg-purple-700 transition"
             >
-            🎮 Login
+              Login
             </Button>
         </motion.div>
 
