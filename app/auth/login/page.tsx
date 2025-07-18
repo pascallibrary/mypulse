@@ -47,7 +47,7 @@ export default function Login() {
       </p>
       <p className="mt-2 text-sm">
         No account?{' '}
-        <a href="/auth/signup" className="text-blue-500 hover:underline">Sign Up</a>
+        <a href="/auth/register" className="text-blue-500 hover:underline">Sign Up</a>
       </p>
     </div>
   );
