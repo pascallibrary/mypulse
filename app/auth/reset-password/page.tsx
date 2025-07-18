@@ -1,116 +1,68 @@
-'use client'
+"use client";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Input } from '../../../components/ui/Input';
-import { Button } from '../../../components/ui/Button';
+export default function ResetPassword() {
+  const [newPassword, setNewPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [token, setToken] = useState('');
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
+  useEffect(() => {
+    const tokenParam = searchParams.get('token');
+    if (tokenParam) setToken(tokenParam);
+  }, [searchParams]);
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:5000/auth/reset-password', { token, newPassword });
+      setMessage('Password reset successfully! Redirecting to login...');
+      setTimeout(() => router.push('/auth/login'), 2000);
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || 'Error resetting password');
+    }
+  };
 
-export default function ResetPasswordPage() {
-       const [email, setEmail] = useState('');
-       const [message, setMessage] = useState('');
-       const [error, setError] = useState('');
+  const handleRequestReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = (e.target as any).email.value;
+    try {
+      await axios.post('http://localhost:5000/auth/request-password-reset', { email });
+      setMessage('Password reset link sent to your email.');
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || 'Error requesting reset');
+    }
+  };
 
-       const handleSubmit = async (e: React.FormEvent) => {
-          e.preventDefault();
-          setError('');
-          setMessage('');
-
-          try {
-            const response = await fetch('/api/auth/reset-password', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
-
-            if(!response.ok) throw new Error('Failed to send reset link');
-            setMessage('Password reset link sent to your email')
-          } catch(err) {
-            console.error(err);
-            setError('Failed to send reset link. Please try again.')
-          }
-       };
-
-       return (
-        <div className='space-y-6'>
-            <motion.h1
-              className='text-3xl font-bold font-mono text-shadow-neon text-center text-indigo-400'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition= {{ delay: 0.5, duration:1 }}
-            >
-               Reset Password 
-            </motion.h1>
-
-            <form onSubmit={handleSubmit} className='space-y-4'>
-                <div>
-                    <Input 
-                      type='email'
-                      placeholder='Enter your email'
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className='w-full px-4 py-3 bg-gray-700/50 text-white rounded-lg focus:ring-2 focus:ring-indigo-400'
-                      required 
-                    />
-                </div>
-
-                {error && (
-                    <motion.p 
-                    className='text-red-400 text-center'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                    >
-                      {error}
-                    </motion.p>
-                )}
-
-                {message && (
-                    <motion.p
-                     className='text-green-400 text-center'
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     transition={{ duration: 0.5 }}
-                    >
-                      {message}
-                    </motion.p>
-                )}
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 1 }}
-                >
-                <Button 
-                type="submit"
-                className='w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-arcade'
-                >
-                     📧 Send Reset Link
-                </Button>   
-                </motion.div>
-            </form>
-             <motion.div
-        className="text-center space-y-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 1 }}
-      >
-        <p className="text-gray-300">
-          Remember your password?{' '}
-          <Link href="/auth/login" className="text-indigo-400 hover:underline">
-            Login
-          </Link>
-        </p>
-        <p>
-          <Link href="/" className="text-indigo-400 hover:underline">
-            Back to Home
-          </Link>
-        </p>
-      </motion.div>
-        </div>
-       )
-
-
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <h1 className="text-2xl font-semibold mb-6">Reset Password</h1>
+      {token ? (
+        <form onSubmit={handleResetPassword} className="flex flex-col gap-3 w-full max-w-xs sm:max-w-sm">
+          <Input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="New Password"
+          />
+          <Button type="submit">Reset Password</Button>
+        </form>
+      ) : (
+        <form onSubmit={handleRequestReset} className="flex flex-col gap-3 w-full max-w-xs sm:max-w-sm">
+          <Input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+          />
+          <Button type="submit">Send Reset Link</Button>
+        </form>
+      )}
+      {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
+    </div>
+  );
 }
