@@ -55,7 +55,6 @@ export default function Signup() {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
-
         <Button type="submit">Sign Up</Button>
       </form>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
@@ -64,8 +63,8 @@ export default function Signup() {
         <a href="/auth/login" className="text-blue-500 hover:underline">Login</a>
       </p>
       <p className="mt-2 text-sm">
-       <a href="/" className="text-blue-500 hover:underline">Back to Home</a>
-     </p>
+        <a href="/" className="text-blue-500 hover:underline">Back to Home</a>
+      </p>
     </div>
   );
 }

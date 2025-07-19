@@ -5,13 +5,12 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-const [showPassword, setShowPassword] = useState(false);
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -35,7 +34,7 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
-       <div className="relative">
+        <div className="relative">
           <Input
             type={showPassword ? "text" : "password"}
             value={password}
@@ -50,7 +49,6 @@ export default function Login() {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
-        
         <Button type="submit">Login</Button>
       </form>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
@@ -63,8 +61,8 @@ export default function Login() {
         <a href="/auth/register" className="text-blue-500 hover:underline">Sign Up</a>
       </p>
       <p className="mt-2 text-sm">
-         <a href="/" className="text-blue-500 hover:underline">Back to Home</a>
-     </p>
+        <a href="/" className="text-blue-500 hover:underline">Back to Home</a>
+      </p>
     </div>
   );
 }
