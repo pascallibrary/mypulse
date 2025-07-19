@@ -32,7 +32,7 @@ export default function ResetPassword() {
     e.preventDefault();
     const email = (e.target as any).email.value;
     try {
-      await axios.post('http://localhost:5000/auth/request-password-reset', { email });
+      await axios.post('api/auth/request-password-reset', { email });
       setMessage('Password reset link sent to your email.');
     } catch (error: any) {
       setMessage(error.response?.data?.message || 'Error requesting reset');

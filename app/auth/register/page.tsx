@@ -15,7 +15,7 @@ export default function Signup() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/auth/register', { email, password, username });
+      await axios.post('api/auth/register', { email, password, username });
       setMessage('Registration successful! Please check your email to verify.');
     } catch (error: any) {
       setMessage(error.response?.data?.message || 'Error registering');

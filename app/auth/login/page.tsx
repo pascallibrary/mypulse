@@ -14,7 +14,7 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', { email, password });
+      const response = await axios.post('api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
       router.push(response.data.redirect);
     } catch (error: any) {
