@@ -4,11 +4,14 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+const [showPassword, setShowPassword] = useState(false);
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -32,12 +35,22 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
+       <div className="relative">
+          <Input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <button
+            type="button"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
+        
         <Button type="submit">Login</Button>
       </form>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
