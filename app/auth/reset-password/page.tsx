@@ -20,7 +20,7 @@ export default function ResetPassword() {
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/auth/reset-password', { token, newPassword });
+      await axios.post(`http://localhost:5000/api/auth/reset-password`, { token, newPassword });
       setMessage('Password reset successfully! Redirecting to login...');
       setTimeout(() => router.push('/auth/login'), 2000);
     } catch (error: any) {
@@ -32,7 +32,7 @@ export default function ResetPassword() {
     e.preventDefault();
     const email = (e.target as any).email.value;
     try {
-      await axios.post('api/auth/request-password-reset', { email });
+      await axios.post(`http://localhost:5000/api/auth/request-password-reset`, { email });
       setMessage('Password reset link sent to your email.');
     } catch (error: any) {
       setMessage(error.response?.data?.message || 'Error requesting reset');

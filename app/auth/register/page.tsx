@@ -15,7 +15,7 @@ export default function Signup() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('api/auth/register', { email, password, username });
+      await axios.post(`http://localhost:5000/api/auth/register`, { username, email, password });
       setMessage('Registration successful! Please check your email to verify.');
     } catch (error: any) {
       setMessage(error.response?.data?.message || 'Error registering');
@@ -51,6 +51,9 @@ export default function Signup() {
         Already have an account?{' '}
         <a href="/auth/login" className="text-blue-500 hover:underline">Login</a>
       </p>
+      <p className="mt-2 text-sm">
+       <a href="/" className="text-blue-500 hover:underline">Back to Home</a>
+     </p>
     </div>
   );
 }

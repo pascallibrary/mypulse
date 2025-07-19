@@ -16,7 +16,7 @@ export default function VerifyEmail() {
         return;
       }
       try {
-        await axios.get(`api/auth/verify?token=${token}`);
+        await axios.get(`http://localhost:5000/api/auth/verify?token=${token}`);
         setMessage('Email verified successfully! Redirecting to login...');
         setTimeout(() => router.push('/auth/login'), 2000);
       } catch (error: any) {

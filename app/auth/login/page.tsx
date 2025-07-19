@@ -14,7 +14,7 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('api/auth/login', { email, password });
+      const response = await axios.post(`http://localhost:5000/api/auth/login`, { email, password });
       localStorage.setItem('token', response.data.token);
       router.push(response.data.redirect);
     } catch (error: any) {
@@ -49,6 +49,9 @@ export default function Login() {
         No account?{' '}
         <a href="/auth/register" className="text-blue-500 hover:underline">Sign Up</a>
       </p>
+      <p className="mt-2 text-sm">
+         <a href="/" className="text-blue-500 hover:underline">Back to Home</a>
+     </p>
     </div>
   );
 }
